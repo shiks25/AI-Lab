@@ -2,7 +2,7 @@
 
 import random
 
-
+board = [' ' for x in range(10)]
 
 
 def insert(board,letter, pos):
@@ -28,35 +28,39 @@ def printBoard(board):
 
 
 def isWinner(bo, le):
-    return ((bo[7] == le and bo[8] == le and bo[9] == le) or                # across the top
-    (bo[4] == le and bo[5] == le and bo[6] == le) or                        # across the middle
-    (bo[1] == le and bo[2] == le and bo[3] == le) or                        # across the bottom
-    (bo[7] == le and bo[4] == le and bo[1] == le) or                        # down the left side
-    (bo[8] == le and bo[5] == le and bo[2] == le) or                        # down the middle
-    (bo[9] == le and bo[6] == le and bo[3] == le) or                        # down the right side
-    (bo[7] == le and bo[5] == le and bo[3] == le) or                        # diagonal
-    (bo[9] == le and bo[5] == le and bo[1] == le))                          # diagonal
+    return ((bo[7] == le and bo[8] == le and bo[9] == le) or # across the top
+    (bo[4] == le and bo[5] == le and bo[6] == le) or # across the middle
+    (bo[1] == le and bo[2] == le and bo[3] == le) or # across the bottom
+    (bo[7] == le and bo[4] == le and bo[1] == le) or # down the left side
+    (bo[8] == le and bo[5] == le and bo[2] == le) or # down the middle
+    (bo[9] == le and bo[6] == le and bo[3] == le) or # down the right side
+    (bo[7] == le and bo[5] == le and bo[3] == le) or # diagonal
+    (bo[9] == le and bo[5] == le and bo[1] == le)) # diagonal
 
 
 def playerMove():
     run = True
     while run:
-        move = int(input('Chose a position from 1-9'))
-        if move > 0 and move < 10:
-            if spaceisfree(board,move):
-                run = False
-                insert(board,'X', move)
+        move = input('Choose a position from 1-9:')
+        try:
+            move = int(move)
+            if move > 0 and move < 10:
+                if spaceisfree(board,move):
+                    run = False
+                    insert(board,'X', move)
+                else:
+                    print('Sorry, this position is already occupied!')
             else:
-                print('Sorry, this position is already occupied!')
-        else:
-            print('Wrong Input!! Choose a position from 1-9')
-       
+                print('Invalid position,Try Again')
+        except:
+            print('Type a number!')
 
 
 def compMove():
     # Given a board and the computer's letter, determine where to move and return that move.
     computer = 'O'
     player = 'X'
+   
     # First, check if we can win in the next move
     for i in range(1, 10):
         copy = board[:]
@@ -106,7 +110,6 @@ def isBoardFull(board):
 
 
 def main():
-    board = [' ' for x in range(10)]
     print('****************************')
     print('Let\'s start the game Tic Tac Toe \n You are X in this game')
     
@@ -118,7 +121,7 @@ def main():
             playerMove()
             printBoard(board)
         else:
-            print('The computer has beaten you! You lose.')
+            print('You lose.The computer has beaten you. ')
             break
 
         if not (isWinner(board, 'X')):
@@ -140,6 +143,7 @@ main()
 while True:
     answer = input('Do you want to play again? (Y/N)')
     if answer.lower() == 'y' or answer.lower == 'yes':
+        board = [' ' for x in range(10)]
         main()
     else:
         break
