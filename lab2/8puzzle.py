@@ -92,7 +92,7 @@ class Puzzle:
                 print("")
             """ If the difference between current and goal node is 0 we have reached the goal state"""
             if (self.h(cur.data, goal) == 0):
-                print("\nNumber of moves: ",count)
+                print("\nNumber of moves: ",count-1)
                 break
             for i in cur.generate_child():
                 i.fval = self.f(i, goal)
